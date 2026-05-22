@@ -1,5 +1,5 @@
 #!/bin/sh
-export RELEASE=3.23.4
+export IMAGE=alpine:latest
 ARCH=$(uname -m)
 case "$ARCH" in
     x86_64) ARCH=x86_64 ;;
@@ -11,14 +11,19 @@ case "$ARCH" in
         exit 1
         ;;
 esac
-echo "RELEASE=$RELEASE" >> "$GITHUB_OUTPUT"
 echo "ARCH=$ARCH" >> "$GITHUB_OUTPUT"
 
 
 # start build
-curl -LO "https://dl-cdn.alpinelinux.org/alpine/v${RELEASE:0:4}/releases/$ARCH/alpine-minirootfs-$RELEASE-$ARCH.tar.gz"
+# Fetch image manifest
+manifest=$(docker manifest inspect $IMAGE)
+# Fetch image digest
+digest=$(echo "$manifest" | jq -r ".manifests[] | select(.platform.architecture == \"$ARCH\") | .digest")
+# Pull and Export image
+docker pull "$IMAGE@${digest}"
+docker export $(docker create "$IMAGE@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/alpine.tar.xz"
 mkdir -p ./alpinewsl
-sudo tar -xzpf alpine-minirootfs-$RELEASE-$ARCH.tar.gz -C ./alpinewsl
+sudo tar -xJpf alpine.tar.xz -C ./alpinewsl
 sudo cp ./wslconf/oobe.sh ./alpinewsl/etc/oobe.sh
 sudo chmod 644 ./alpinewsl/etc/oobe.sh
 sudo chmod +x ./alpinewsl/etc/oobe.sh

@@ -1,6 +1,8 @@
 # Alpine WSL
 Alpine Linux on WSL
 
+Based on [Official Alpine Docker Image](https://hub.docker.com/_/alpine)
+
 [![Build](https://github.com/arfshl/alpine-wsl/actions/workflows/build.yml/badge.svg)](https://github.com/arfshl/alpine-wsl/actions/workflows/build.yml)
 
 ![screenshot](https://github.com/arfshl/alpine-wsl/raw/main/image.png)
