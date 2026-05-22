@@ -1,10 +1,10 @@
 #!/bin/sh
 ARCH=$(uname -m)
 case "$ARCH" in
-    x86_64) ARCH=x86_64 ;;
-    amd64) ARCH=x86_64 ;;
-    aarch64) ARCH=aarch64 ;;
-    arm64) ARCH=aarch64 ;;
+    x86_64) ARCH=amd64 ;;
+    amd64) ARCH=amd64 ;;
+    aarch64) ARCH=arm64 ;;
+    arm64) ARCH=arm64 ;;
     *)
         echo "Unsupported architecture: $ARCH"
         exit 1
