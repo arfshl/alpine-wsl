@@ -1,5 +1,4 @@
 #!/bin/sh
-export IMAGE=alpine:edge
 ARCH=$(uname -m)
 case "$ARCH" in
     x86_64) ARCH=x86_64 ;;
@@ -16,12 +15,12 @@ echo "ARCH=$ARCH" >> "$GITHUB_OUTPUT"
 
 # start build
 # Fetch image manifest
-manifest=$(docker manifest inspect $IMAGE)
+manifest=$(docker manifest inspect alpine:edge)
 # Fetch image digest
 digest=$(echo "$manifest" | jq -r ".manifests[] | select(.platform.architecture == \"$ARCH\") | .digest")
 # Pull and Export image
-docker pull "$IMAGE@${digest}"
-docker export $(docker create "$IMAGE@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/alpine.tar.xz"
+docker pull "alpine:edge@${digest}"
+docker export $(docker create "alpine:edge@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/alpine.tar.xz"
 mkdir -p ./alpinewsl
 sudo tar -xJpf alpine.tar.xz -C ./alpinewsl
 sudo cp ./wslconf/oobe.sh ./alpinewsl/etc/oobe.sh
