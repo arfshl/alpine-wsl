@@ -64,7 +64,7 @@ jobs:
         uses: softprops/action-gh-release@v3
         with:
           tag_name: latest
-          name: latest
+          name: Release stable
           files: |
             aarch64/alpine-stable*.wsl
             x86_64/alpine-stable*.wsl
@@ -75,7 +75,7 @@ jobs:
         uses: softprops/action-gh-release@v3
         with:
           tag_name: edge
-          name: edge
+          name: Release edge
           files: |
             aarch64/alpine-edge*.wsl
             x86_64/alpine-edge*.wsl
