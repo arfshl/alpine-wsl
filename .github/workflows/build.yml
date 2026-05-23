@@ -68,8 +68,8 @@ jobs:
           tag_name: latest
           name: Release stable
           files: |
-            alpine-stable*.wsl
-            alpine-stable*.wsl
+            alpine-stable-amd64.wsl
+            alpine-stable-arm64.wsl
           preserve_order: true
           make_latest: true
 
@@ -79,8 +79,8 @@ jobs:
           tag_name: edge
           name: Release edge
           files: |
-            alpine-edge*.wsl
-            alpine-edge*.wsl
+            alpine-edge-amd64.wsl
+            alpine-edge-arm64.wsl
           preserve_order: true
           make_latest: false
 
