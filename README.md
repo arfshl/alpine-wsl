@@ -25,6 +25,7 @@ Based on [Official Alpine Docker Image](https://hub.docker.com/_/alpine)
 ### Other WSL distributions
 
 [![void-wsl](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=void-wsl&theme=transparent)](https://github.com/arfshl/void-wsl)
+[![archlinuxarm-wsl](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=archlinuxarm-wsl&theme=transparent)](https://github.com/arfshl/archlinuxarm-wsl)
 [![ubuntu-wsl](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=ubuntu-wsl&theme=transparent)](https://github.com/arfshl/ubuntu-wsl)
 [![debian-rolling-wsl](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=debian-rolling-wsl&theme=transparent)](https://github.com/arfshl/debian-rolling-wsl)
 [![devuan-wsl](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=devuan-wsl&theme=transparent)](https://github.com/arfshl/devuan-wsl)
