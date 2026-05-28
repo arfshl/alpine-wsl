@@ -1,28 +1,24 @@
 #!/bin/sh
+export RELEASE=$(curl -s https://dl-cdn.alpinelinux.org/alpine/latest-stable/releases/x86_64/ | grep -oP 'alpine-standard-\K[0-9]+\.[0-9]+\.[0-9]+' | sort -V -r | head -n 1)
 ARCH=$(uname -m)
 case "$ARCH" in
-    x86_64) ARCH=amd64 ;;
-    amd64) ARCH=amd64 ;;
-    aarch64) ARCH=arm64 ;;
-    arm64) ARCH=arm64 ;;
+    x86_64) ARCH=x86_64 ;;
+    amd64) ARCH=x86_64 ;;
+    aarch64) ARCH=aarch64 ;;
+    arm64) ARCH=aarch64 ;;
     *)
         echo "Unsupported architecture: $ARCH"
         exit 1
         ;;
 esac
+echo "RELEASE=$RELEASE" >> "$GITHUB_OUTPUT"
 echo "ARCH=$ARCH" >> "$GITHUB_OUTPUT"
 
 
 # start build
-# Fetch image manifest
-manifest=$(docker manifest inspect alpine:latest)
-# Fetch image digest
-digest=$(echo "$manifest" | jq -r ".manifests[] | select(.platform.architecture == \"$ARCH\") | .digest")
-# Pull and Export image
-docker pull "alpine:latest@${digest}"
-docker export $(docker create "alpine:latest@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/alpine.tar.xz"
+curl -LO "https://dl-cdn.alpinelinux.org/alpine/v${RELEASE:0:4}/releases/$ARCH/alpine-minirootfs-$RELEASE-$ARCH.tar.gz"
 mkdir -p ./alpinewsl
-sudo tar -xJpf alpine.tar.xz -C ./alpinewsl
+sudo tar -xzpf alpine-minirootfs-$RELEASE-$ARCH.tar.gz -C ./alpinewsl
 sudo cp ./wslconf/oobe.sh ./alpinewsl/etc/oobe.sh
 sudo chmod 644 ./alpinewsl/etc/oobe.sh
 sudo chmod +x ./alpinewsl/etc/oobe.sh

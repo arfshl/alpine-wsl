@@ -65,22 +65,22 @@ jobs:
       - name: Release stable
         uses: softprops/action-gh-release@v3
         with:
-          tag_name: latest
-          name: Release stable
+          tag_name: ${{ needs.build-amd64.outputs.RELEASE }}
+          name: ${{ needs.build-amd64.outputs.RELEASE }}
           files: |
-            alpine-stable-amd64.wsl
-            alpine-stable-arm64.wsl
+            alpine-stable-x86_64.wsl
+            alpine-stable-aarch64.wsl
           preserve_order: true
           make_latest: true
 
       - name: Release edge
         uses: softprops/action-gh-release@v3
         with:
-          tag_name: edge
-          name: Release edge
+          tag_name: ${{ needs.build-amd64.outputs.RELEASE_EDGE }}
+          name: ${{ needs.build-amd64.outputs.RELEASE_EDGE }}
           files: |
-            alpine-edge-amd64.wsl
-            alpine-edge-arm64.wsl
+            alpine-edge-x86_64.wsl
+            alpine-edge-aarch64.wsl
           preserve_order: true
           make_latest: false
 
